@@ -5,16 +5,21 @@
 public class BinaryST {
 
 	class Node {
-		Node parent;
-		Node left;
-		Node right;
-
+		Node parent, left, right;
+		String data;
 	}
 	public static void main(String[] args) {
 
 	}
 
 	public BinaryST() {
+	}
+	
+	public BinaryST(String[] s) {
 		
+	}
+	
+	public int distinctSize() {
+		return 0;
 	}
 }
