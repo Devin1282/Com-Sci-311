@@ -1,4 +1,4 @@
-/*This class will implement a (variant of) binary search tree that can store a multi-set of strings 
+/**This class will implement a (variant of) binary search tree that can store a multi-set of strings 
 *and supports the queries described below. 
 *Recall that a string may appear more than once in a multi-set.
 *
@@ -6,6 +6,7 @@
 **/
 
 public class BinaryST {
+	private Node root;
 	int size;
 	int distinctSize;
 
@@ -13,6 +14,13 @@ public class BinaryST {
 		Node parent, left, right;
 		String data;
 		int quantity;
+		int size;       //number of nodes in its subtrees
+		
+		public Node(String s, int size) {
+            this.data = s;
+            this.size = size;
+            this.quantity = 1;
+        }
 	}
 
 	/*Creates an empty Binary Search Tree*/
@@ -20,51 +28,107 @@ public class BinaryST {
 	}
 	
 	
-	/*Creates a Binary Search Tree obtained by adding the elements in the order they appear in the array 's'
-	 * You must NOT balance the tree.  IF a string appears L times in the array, your BST must store this information*/
+	/**Creates a Binary Search Tree obtained by adding the elements in the order they appear in the array 's'
+	 * You must NOT balance the tree.  If a string appears L times in the array, your BST must store this information*/
 	public BinaryST(String[] s) {
+		this.size = s.length;
 		for (String insert : s) {
 			add(insert);
 		}
 	}
 	
-	/*Returns the number of distinct strings stored in the Tree.  
+	/**
+     * Returns the value associated with the given key.
+     */
+    public Node get(String s) {
+        return get(root, s);
+    }
+
+    private Node get(Node n, String s) {
+        if (s == null) throw new IllegalArgumentException("calls get() with a null key");
+        if (n == null) return null;
+        int cmp = s.compareTo(n.data);
+        if (cmp < 0) {
+        	return get(n.left, s);
+        } else if (cmp > 0) {
+        	return get(n.right, s);
+        } else {
+        	return n;
+        }
+    }
+	
+	/**Returns the number of distinct strings stored in the Tree.  
 	 * If you have added "AB", "CD", "AB". then this method returns 2*/
 	public int distinctSize() {
 		return distinctSize;
 	}
 	
-	/*Returns the total number of elements stored in the tree.
+	/**Returns the total number of elements stored in the tree.
 	 *If you have added "AB", "CD", "AB". then this method returns 3 */
 	public int size() {
-		return size;
+		return size(root);
 	}
+
+    
+    private int size(Node n) {
+        if (n == null) return 0;
+        else return n.size;
+    }
 	
-	/*Returns the current height of the tree.  Height of a tree with a single node is one.
+	/**Returns the current height of the tree.  Height of a tree with a single node is one.
 	 * Height of an empty tree is zero*/
 	public int height() {
 		//TODO
+		if (root == null) {
+			return 0;
+		}
+		
 		return 0;
 	}
 	
-	/*Adds the string s to the BST. Even if s already appears in the tree, it must add s.*/
-	public void add(String s) {
-		//TODO
-	}
+	/**Adds the string s to the BST. Even if s already appears in the tree, it must add s.*/
+    public void add(String s) {
+        if (s == null) throw new IllegalArgumentException("called put() with a null parameter");
+        size++;
+		if (get(s) != null) {
+			distinctSize++;
+		}
+        root = add(root, s);
+    }
+
+    private Node add(Node n, String s) {
+        if (n == null) return new Node(s, 1);
+        int cmp = s.compareTo(n.data);
+        if (cmp < 0) {
+        	n.left  = add(n.left,  s);
+        } else if (cmp > 0) {
+        	n.right = add(n.right, s);
+        } else {
+        	n.quantity++;
+        }
+        n.size = 1 + size(n.left) + size(n.right);
+        return n;
+    }
 	
-	/*Returns true is s appears in the tree; otherwise returns false*/
+	/**Returns true is s appears in the tree; otherwise returns false*/
 	public boolean search(String s) {
-		//TODO
-		return false;
+		if (get(s) != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
-	/*Returns the number of times s appears in the tree.*/
+	/**Returns the number of times s appears in the tree.*/
 	public int frequency(String s) {
-		//TODO
-		return 0;
+		if (get(s) != null) {
+			return get(s).quantity;
+		} else {
+			return 0;
+		}
 	}
 	
-	/*If s appears in the tree, then removes the string s from the tree and returns 
+	/**If s appears in the tree, then removes the string s from the tree and returns 
 	 * true. If s does not appear in the tree, then returns false. If s appears, more than once then 
 	 * remove only one occurrence*/
 	public boolean remove(String s) {
@@ -72,7 +136,7 @@ public class BinaryST {
 		return false;
 	}
 	
-	/*Returns an array of Strings obtained by doing an in-order traversal of the tree*/
+	/**Returns an array of Strings obtained by doing an in-order traversal of the tree*/
 	public String[] inOrder() {
 		//TODO
 		String[] s = new String[size];
@@ -80,7 +144,7 @@ public class BinaryST {
 		return s;
 	}
 	
-	/*Returns an array of Strings obtained by doing an pre-order traversal of the tree.*/
+	/**Returns an array of Strings obtained by doing an pre-order traversal of the tree.*/
 	public String[] preOrder() {
 		//TODO
 		String[] s = new String[size];
@@ -88,9 +152,18 @@ public class BinaryST {
 		return s;
 	}
 	
-	/*Returns number of strings that are smaller than s.*/
-	public int rankOf(String s) {
-		//TODO
-		return 0;
-	}
+	/**Returns number of strings that are smaller than s.*/
+    public int rankOf(String s) {
+        if (s == null) throw new IllegalArgumentException("argument to rank() is null");
+        return rankOf(s, root);
+    } 
+
+    private int rankOf(String s, Node n) {
+        if (n == null) return 0; 
+        int cmp = s.compareTo(n.data); 
+        if      (cmp < 0) return rankOf(s, n.left); 
+        else if (cmp > 0) return 1 + size(n.left) + rankOf(s, n.right); 
+        else              return size(n.left); 
+    } 
+	
 }
