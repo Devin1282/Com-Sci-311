@@ -77,14 +77,15 @@ public class BinaryST {
 	
 	/**Returns the current height of the tree.  Height of a tree with a single node is one.
 	 * Height of an empty tree is zero*/
-	public int height() {
-		//TODO
-		if (root == null) {
-			return 0;
-		}
-		
-		return 0;
-	}
+    public int height() {
+        return height(root);
+    }
+    private int height(Node n) {
+        if (n == null) {
+        	return 0;
+        }
+        return 1 + Math.max(height(n.left), height(n.right));
+    }
 	
 	/**Adds the string s to the BST. Even if s already appears in the tree, it must add s.*/
     public void add(String s) {
@@ -130,26 +131,92 @@ public class BinaryST {
 	
 	/**If s appears in the tree, then removes the string s from the tree and returns 
 	 * true. If s does not appear in the tree, then returns false. If s appears, more than once then 
-	 * remove only one occurrence*/
+	 * remove only one occurrence*/	
 	public boolean remove(String s) {
-		//TODO
-		return false;
-	}
+        if (s == null) {
+        	throw new IllegalArgumentException("calls delete() with a null key");
+        }
+        if (!search(s)) {
+        	return false; 
+        } else {
+        	root = remove(root, s);
+        	return true;
+        }
+        
+
+    }
+
+    private Node remove(Node n, String s) {
+        if (n == null) {
+        	return null;
+        }
+
+        int cmp = s.compareTo(n.data);
+        if (cmp < 0) {
+        	n.left  = remove(n.left,  s);
+        } else if (cmp > 0) {
+        	n.right = remove(n.right, s);
+        } else { 
+            if (n.right == null) {
+            	return n.left;
+            }
+            if (n.left  == null) {
+            	return n.right;
+            }
+            Node t = n;
+            n = min(t.right);
+            n.right = removeMin(t.right);
+            n.left = t.left;
+        } 
+        n.size = size(n.left) + size(n.right) + 1;
+        return n;
+    }
+    
+    private Node removeMin(Node n) {
+        if (n.left == null) return n.right;
+        n.left = removeMin(n.left);
+        n.size = size(n.left) + size(n.right) + 1;
+        return n;
+    }
+    
+    private Node min(Node n) { 
+        if (n.left == null) {
+        	return n; 
+        } else {
+        	return min(n.left); 
+        }
+    }
 	
 	/**Returns an array of Strings obtained by doing an in-order traversal of the tree*/
 	public String[] inOrder() {
-		//TODO
 		String[] s = new String[size];
-		
+		inOrder(root, s, 0);
 		return s;
+	}
+	
+	public void inOrder(Node n, String[] s, int index) {
+		if(n == null) {
+			return;
+		}
+	    inOrder(n.left, s, index);   
+	    s[index++]= n.data;          
+	    inOrder(n.right, s, index);  
 	}
 	
 	/**Returns an array of Strings obtained by doing an pre-order traversal of the tree.*/
 	public String[] preOrder() {
-		//TODO
 		String[] s = new String[size];
-		
+		inOrder(root, s, 0);
 		return s;
+	}
+	
+	public void preOrder(Node n, String[] s, int index) {
+		if(n == null) {
+			return;
+		}
+		s[index++]= n.data;         
+	    preOrder(n.left, s, index);   
+	    preOrder(n.right, s, index);  
 	}
 	
 	/**Returns number of strings that are smaller than s.*/
