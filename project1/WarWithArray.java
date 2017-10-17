@@ -1,20 +1,27 @@
-/*
-This class will contain a method to return T. 
-This class uses array to store S. 
-You must not use any other data structure to store S. 
-This class will have following constructor and method:
+// LEAVE THIS FILE IN THE DEFAULT PACKAGE
+//  (i.e., DO NOT add 'package cs311.pa1;' or similar)
 
-WarWithArray(String[] s, int k ). s is the set of all k-length substrings of U.
+// DO NOT MODIFY THE EXISTING METHOD SIGNATURES
+//  (you may, however, add member fields and additional methods)
 
-compute2k(). This method returns an arraylist of 2k-length strings which is the set of all 2k-length substrings of U. 
-Return type of this method must be ArrayList<String> 
-*/
+// DO NOT INCLUDE LIBRARIES OUTSIDE OF THE JAVA STANDARD LIBRARY
+//  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
+
+import java.util.ArrayList;
 
 
-public class WarWithArray {
-
+public class WarWithArray
+{
+	// member fields and methods
 	
-	public static void main(String[] args) {
-
+	public WarWithArray(String[] s, int k)
+	{
+		// implementation
+	}
+	
+	public ArrayList<String> compute2k()
+	{
+		// implementation
 	}
 }
+
