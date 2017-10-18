@@ -10,8 +10,7 @@
 import java.util.ArrayList;
 
 
-public class WarWithArray
-{
+public class WarWithArray extends BinaryST {
 	// member fields and methods
 	
 	public WarWithArray(String[] s, int k)
