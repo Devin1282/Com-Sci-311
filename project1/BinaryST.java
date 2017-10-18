@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**This class will implement a (variant of) binary search tree that can store a multi-set of strings 
 *and supports the queries described below. 
 *Recall that a string may appear more than once in a multi-set.
@@ -6,12 +8,12 @@
 **/
 
 public class BinaryST {
-	private Node root;
+	Node root;
 	int size;
 	int distinctSize;
 
 	class Node {
-		Node parent, left, right;
+		Node left, right;
 		String data;
 		int quantity;
 		int size;       //number of nodes in its subtrees
@@ -189,32 +191,46 @@ public class BinaryST {
 	
 	/**Returns an array of Strings obtained by doing an in-order traversal of the tree*/
 	public String[] inOrder() {
-		String[] s = new String[size];
-		inOrder(root, s, 0);
+		ArrayList<String> as = new ArrayList<String>();
+		inOrder(root, as, 0);
+		String[] s = as.toArray(new String[size]);
 		return s;
 	}
 	
-	public void inOrder(Node n, String[] s, int index) {
+	public void inOrder(Node n, ArrayList<String> s, int index) {
 		if(n == null) {
 			return;
 		}
-	    inOrder(n.left, s, index);   
-	    s[index++]= n.data;          
+	    inOrder(n.left, s, index);
+	    if (n.quantity == 1) {
+	    	s.add(n.data);
+	    } else {
+	    	for (int i = 0; i < n.quantity; i++) {
+	    		s.add(n.data);
+	    	}
+	    }	    
 	    inOrder(n.right, s, index);  
 	}
 	
 	/**Returns an array of Strings obtained by doing an pre-order traversal of the tree.*/
 	public String[] preOrder() {
-		String[] s = new String[size];
-		inOrder(root, s, 0);
+		ArrayList<String> as = new ArrayList<String>();
+		preOrder(root, as, 0);
+		String[] s = as.toArray(new String[size]);
 		return s;
 	}
 	
-	public void preOrder(Node n, String[] s, int index) {
+	public void preOrder(Node n, ArrayList<String> s, int index) {
 		if(n == null) {
 			return;
 		}
-		s[index++]= n.data;         
+		if (n.quantity == 1) {
+	    	s.add(n.data);
+	    } else {
+	    	for (int i = 0; i < n.quantity; i++) {
+	    		s.add(n.data);
+	    	}
+	    }      
 	    preOrder(n.left, s, index);   
 	    preOrder(n.right, s, index);  
 	}

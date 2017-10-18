@@ -10,18 +10,61 @@
 import java.util.ArrayList;
 
 
-public class WarWithBST
+public class WarWithBST extends BinaryST
 {
-	// member fields and methods
+	String[] s;
+	int k;
+	BinaryST b;
 	
 	public WarWithBST(String[] s, int k)
 	{
-		// implementation
+		this.s = s;
+		this.k = k;
+		this.b = new BinaryST();
+		
+		for (String s1 : s) {
+			b.add(s1);
+		}
 	}
 	
+	/**
+	 * Computes all 2k-length possible substring combinations of the elements in s
+	 * @return An ArrayList containing the 2k-length strings.
+	 */
 	public ArrayList<String> compute2k()
 	{
-		// implementation
+	ArrayList<String> t = new ArrayList<String>();
+			
+			for(String e : s)
+			{
+				for(String f : s)
+				{
+					if(isValid(e + f))
+					{
+						t.add(e + f);
+					}
+				}
+			}
+	return t;
 	}
+	
+	/**
+	 * Iterates through the given string, checking if each k-length substring is in s.
+	 * @param a The string to check
+	 * @return True if all k-length substrings are in the BST b, false otherwise.
+	 */
+	private boolean isValid(String a)
+	{
+		for(int i = 0; i <= k; i++)
+		{
+			if(!b.search(a.substring(i, i+k)))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
 }
 
