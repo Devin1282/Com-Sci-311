@@ -8,20 +8,49 @@
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 
 public class WarWithHash
 {
-	// member fields and methods
+	String[] s;
+	int k;
+	Hashtable<Integer, String> table;
 	
 	public WarWithHash(String[] s, int k)
 	{
-		// implementation
+		this.s = s;
+		this.k = k;
+		this.table = new Hashtable<Integer, String>();
+		
+		for (String t: s) {
+			table.put(hash(t), t);
+		}
 	}
 	
 	public ArrayList<String> compute2k()
 	{
-		// implementation
+		ArrayList<String> t = new ArrayList<String>();
+		
+		for(String e : s)
+		{
+			for(String f : s)
+			{
+				if(isValid(e + f))
+				{
+					t.add(e + f);
+				}
+			}
+		}
+		return t;
+	}
+	
+	private boolean isValid(String s) {
+		return table.get(hash(s)) != null;
+	}
+	
+	private int hash(String t) {
+		return s.hashCode()%(s.length/2);
 	}
 }
 

@@ -8,7 +8,7 @@ public class test extends BinaryST {
 		
 		int k = 4;
 		String[] s = generate(k);
-		System.out.println(Arrays.toString(s));
+		//System.out.println(Arrays.toString(s));
 		
 		
 		testBinaryST(s);
@@ -42,12 +42,14 @@ public class test extends BinaryST {
 			tree.add(t);
 		}
 		
+		tree.add("TTTT");
 		
-		String[] inOrder = tree.inOrder();
+		System.out.println(tree.size);
+		System.out.println(tree.remove("TTTT"));
+		System.out.println(tree.size);
 		
-//		for (String r : inOrder) {
-//			System.out.println(r);
-//		}
+		
+
 	}
 	
 	public static void testWarWithBST(String[] s, int k) {

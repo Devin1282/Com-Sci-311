@@ -68,7 +68,7 @@ public class BinaryST {
 	/**Returns the total number of elements stored in the tree.
 	 *If you have added "AB", "CD", "AB". then this method returns 3 */
 	public int size() {
-		return size(root);
+		return size;
 	}
 
     
@@ -132,7 +132,7 @@ public class BinaryST {
 	}
 	
 	/**If s appears in the tree, then removes the string s from the tree and returns 
-	 * true. If s does not appear in the tree, then returns false. If s appears, more than once then 
+	 * true. If s does not appear in the tree, then returns false. If s appears more than once, then 
 	 * remove only one occurrence*/	
 	public boolean remove(String s) {
         if (s == null) {
@@ -142,6 +142,7 @@ public class BinaryST {
         	return false; 
         } else {
         	root = remove(root, s);
+        	size--;
         	return true;
         }
         
@@ -155,10 +156,15 @@ public class BinaryST {
 
         int cmp = s.compareTo(n.data);
         if (cmp < 0) {
-        	n.left  = remove(n.left,  s);
+        	n.left  = remove(n.left, s);
         } else if (cmp > 0) {
         	n.right = remove(n.right, s);
-        } else { 
+        } else {
+        	System.out.println("string found");
+        	if (n.quantity > 1) {
+        		n.quantity--;
+        		return n;
+        	}
             if (n.right == null) {
             	return n.left;
             }
@@ -175,7 +181,9 @@ public class BinaryST {
     }
     
     private Node removeMin(Node n) {
-        if (n.left == null) return n.right;
+        if (n.left == null) {
+        	return n.right;
+        }
         n.left = removeMin(n.left);
         n.size = size(n.left) + size(n.right) + 1;
         return n;
@@ -237,16 +245,24 @@ public class BinaryST {
 	
 	/**Returns number of strings that are smaller than s.*/
     public int rankOf(String s) {
-        if (s == null) throw new IllegalArgumentException("argument to rank() is null");
+        if (s == null) {
+        	throw new IllegalArgumentException("null method argument");
+        }
         return rankOf(s, root);
     } 
 
     private int rankOf(String s, Node n) {
-        if (n == null) return 0; 
+        if (n == null) {
+        	return 0; 
+        }
         int cmp = s.compareTo(n.data); 
-        if      (cmp < 0) return rankOf(s, n.left); 
-        else if (cmp > 0) return 1 + size(n.left) + rankOf(s, n.right); 
-        else              return size(n.left); 
+        if (cmp < 0) {
+        	return rankOf(s, n.left); 
+        } else if (cmp > 0) {
+        	return 1 + size(n.left) + rankOf(s, n.right); 
+        } else {
+        	return size(n.left); 
+        }
     } 
 	
 }
