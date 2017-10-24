@@ -1,14 +1,17 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class test extends BinaryST {
 
 	public static void main(String[] args) {
 		
-		testBinaryST();
 		
-		String[] s = new String[] {"ACGT", "CCGT", "GGCT", "CAGT", "GTTA", "AAAT", "GTTC"};
 		int k = 4;
+		String[] s = generate(k);
+		System.out.println(Arrays.toString(s));
 		
+		
+		testBinaryST(s);
 		//testWarWithBST(s, k);
 		//testWarWithHash(s, k);
 		//testWarWithRollHash(s, k);
@@ -24,7 +27,7 @@ public class test extends BinaryST {
 		for (int i = 0; i < s.length; i++) {
 			String t = "";
 			for (int j = 0; j < k; j++) {
-				t.concat(letters[rand.nextInt(4) + 1]);
+				t = t.concat(letters[rand.nextInt(4)]);
 			}
 			s[i] = t;
 		}
@@ -32,23 +35,19 @@ public class test extends BinaryST {
 		return s;
 	}
 	
-	public static void testBinaryST() {
+	public static void testBinaryST(String[] s) {
 		BinaryST tree = new BinaryST();
 		
-		tree.add("AGCT");
-		tree.add("ACCC");
-		tree.add("ACCC");
-		tree.add("TGCT");
+		for (String t : s) {
+			tree.add(t);
+		}
 		
-		System.out.println("Tree Root:" +tree.root.data);
-		System.out.println("Tree Left:" +tree.root.left.data);
-		System.out.println("Tree Right:" +tree.root.right.data);
 		
 		String[] inOrder = tree.inOrder();
 		
-		for (String s : inOrder) {
-			System.out.println(s);
-		}
+//		for (String r : inOrder) {
+//			System.out.println(r);
+//		}
 	}
 	
 	public static void testWarWithBST(String[] s, int k) {
