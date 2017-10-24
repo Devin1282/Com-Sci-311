@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class test extends BinaryST {
 
 	public static void main(String[] args) {
@@ -7,11 +9,27 @@ public class test extends BinaryST {
 		String[] s = new String[] {"ACGT", "CCGT", "GGCT", "CAGT", "GTTA", "AAAT", "GTTC"};
 		int k = 4;
 		
-		testWarWithBST(s, k);
-		testWarWithHash(s, k);
-		testWarWithRollHash(s, k);
+		//testWarWithBST(s, k);
+		//testWarWithHash(s, k);
+		//testWarWithRollHash(s, k);
 		
 
+	}
+	
+	public static String[] generate(int k) {
+		String[] letters = new String[] {"A", "T", "G", "C"};
+		String[] s = new String[100];
+		
+		Random rand = new Random();		
+		for (int i = 0; i < s.length; i++) {
+			String t = "";
+			for (int j = 0; j < k; j++) {
+				t.concat(letters[rand.nextInt(4) + 1]);
+			}
+			s[i] = t;
+		}
+		
+		return s;
 	}
 	
 	public static void testBinaryST() {
