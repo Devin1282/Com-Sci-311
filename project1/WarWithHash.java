@@ -57,9 +57,10 @@ public class WarWithHash
 	 */
 	private boolean isValid(String a) 
 	{
-		for(int i = 0; i <= k; i++)
+		for(int i = 1; i <= k; i++)
 		{
-			if(s.get(a.substring(i, i+k).hashCode()) == null)
+			int hash = a.substring(i, i+k).hashCode();
+			if(s.get(hash) == null)
 			{
 				return false;
 			}

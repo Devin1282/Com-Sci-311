@@ -9,11 +9,12 @@
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Set;
 
 
 public class WarWithRollHash
 {
-	Hashtable s;
+	Hashtable<Integer, String> s;
 	int k;
 	
 	public WarWithRollHash(String[] s, int k)
@@ -27,10 +28,49 @@ public class WarWithRollHash
 		}
 	}
 	
+	/**
+	 * Iterates through the given string, checking if each k-length substring is in s.
+	 * @param a The string to check
+	 * @return True if all k-length substrings are in s, false otherwise.
+	 */
 	public ArrayList<String> compute2k()
 	{
 		ArrayList<String> t = new ArrayList<String>();
+		
+		Set<Integer> keys = s.keySet();
+		for(Integer e : keys)
+		{
+			for(Integer f : keys)
+			{
+				if(isValid(s.get(e) + s.get(f)))
+				{
+					t.add(s.get(e) + s.get(f));
+				}
+			}
+		}
 		return t;
+	}
+	
+	/**
+	 * Iterates through the given string, checking if each k-length substring is in s.
+	 * @param a The string to check
+	 * @return True if all k-length substrings are in s, false otherwise.
+	 */
+	private boolean isValid(String a) 
+	{
+		int hash = a.substring(0, k).hashCode();
+		for(int i = 0; i <= k; i++)
+		{
+
+			String toRem = "" + a.charAt(i);
+			String toAdd = "" + a.charAt(i + k);
+			hash = hash - toRem.hashCode() + toAdd.hashCode();
+			if(s.get(hash) == null)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 }
 
