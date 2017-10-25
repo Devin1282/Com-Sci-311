@@ -1,0 +1,97 @@
+%=====================ComS 311 LaTeX template, following the CMU 02-713 template================
+%
+% You don't need to use LaTeX or this template, but you must turn your homework in as
+% a typeset .pdf or .doc(x)
+%
+% How to use:
+%    1. Update your information in section "A" below
+%    2. Write your answers in section "B" below. Precede answers for all 
+%       parts of a question with the command "\question{n}{desc}" where n is
+%       the question number and "desc" is a short, one-line description of 
+%       the problem. There is no need to restate the problem. 
+%       Note that "desc'' can be empty, i.e., \question{n}{} is an acceptable command.
+%    3. If a question has multiple parts, precede the answer to part x with the
+%       command "\part{x}".
+%    4. If a problem asks you to design an algorithm, use the commands
+%       \algorithm, \correctness, \runtime to precede your discussion of the 
+%       description of the algorithm, its correctness, and its running time, respectively.
+%    5. You can include graphics by using the command \includegraphics{FILENAME}
+%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{times,inconsolata}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{TiKZ}
+\usepackage{framed}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usetikzlibrary{automata,positioning}
+\usetikzlibrary{arrows}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\headheight}{13.6pt}
+\newcommand\question[2]{\vspace{.25in}\hrule\textbf{#1. #2}\vspace{.5em}\hrule\vspace{.10in}}
+\renewcommand\part[1]{\vspace{.10in}\textbf{(#1)}}
+\pagestyle{fancyplain}
+\lhead{\textbf{\NAME\ }}
+\chead{\textbf{Report\HWNUM}}
+\rhead{\textsc{Com S 311}}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}\raggedright
+%Section A==============Change the values below to match your information==================
+\newcommand\NAME{Devin Johnson, Mason Wray}  % your name
+\newcommand\HWNUM{ PA1}              % the homework number
+
+
+%Section B==============Put your answers to the questions below here=======================
+
+\question{WarWithArray}{} 
+
+\textbf{PseudoCode:}\\
+\begin{verbatim}
+Input: int k, Array, a[], of strings of length k.\\
+For each string e in a[]:
+    For each string f in a[]:
+        check if the string "e+f" is valid(e+f)
+    	
+    	
+function valid(s):
+   For each b = k length substring in s:
+       Loop through our original array a:
+           check if b is in a at any index
+\end{verbatim}
+
+\textbf{Runtime of compute2k():}\\
+
+The algorithm is split into 3 different parts.  
+
+\pagebreak
+%----------------------------------
+\question{WarWithBST}{}
+
+\textbf{PseudoCode:}\\
+
+\textbf{Runtime of compute2k():}\\
+
+\pagebreak
+%----------------------------------
+\question{WarWithHash}{}
+
+\textbf{PseudoCode:}\\
+
+\textbf{Runtime of compute2k():}\\
+
+
+\pagebreak
+%----------------------------------
+\question{WarWithRollHash}{}
+
+\textbf{PseudoCode:}\\
+
+\textbf{Runtime of compute2k():}\\
+
+\end{document}
