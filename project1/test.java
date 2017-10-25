@@ -7,13 +7,15 @@ public class test extends BinaryST {
 		
 		
 		int k = 4;
-		String[] s = generate(k);
+		//String[] s = generate(k);
+		String[] s = new String[] {"ACGT", "AGTC", "AAGT", "GCGT", "ACAA", "GTGT", "ACGT", "ACCT", "ACTT", "GTAT", "CCCC", "CTTA", "CGTA", "TGAC", "GTAC", "TACG"};
 		//System.out.println(Arrays.toString(s));
 		
 		
-		testBinaryST(s);
-		//testWarWithBST(s, k);
-		//testWarWithHash(s, k);
+		//testBinaryST(s);
+		testWarWithArray(s, k);
+		testWarWithBST(s, k);
+		testWarWithHash(s, k);
 		//testWarWithRollHash(s, k);
 		
 
@@ -41,27 +43,33 @@ public class test extends BinaryST {
 		for (String t : s) {
 			tree.add(t);
 		}
-		
-		tree.add("TTTT");
-		
-		System.out.println(tree.size);
-		System.out.println(tree.remove("TTTT"));
-		System.out.println(tree.size);
-		
-		
+				
 
 	}
 	
+	public static void testWarWithArray(String[] s, int k) {
+		WarWithArray war = new WarWithArray(s, k);
+		String r = Arrays.toString(war.compute2k().toArray());
+		System.out.println(r);
+	}
+	
+	
 	public static void testWarWithBST(String[] s, int k) {
-		//TODO
+		WarWithBST war = new WarWithBST(s, k);
+		String r = Arrays.toString(war.compute2k().toArray());
+		System.out.println(r);
 	}
 	
 	public static void testWarWithHash(String[] s, int k) {
-		//TODO
+		WarWithHash war = new WarWithHash(s, k);
+		String r = Arrays.toString(war.compute2k().toArray());
+		System.out.println(r);
 	}
 	
 	public static void testWarWithRollHash(String[] s, int k) {
-		//TODO
+		WarWithRollHash war = new WarWithRollHash(s, k);
+		String r = Arrays.toString(war.compute2k().toArray());
+		System.out.println(r);
 	}
 
 }
