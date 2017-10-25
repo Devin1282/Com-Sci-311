@@ -9,48 +9,62 @@
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-
+import java.util.Set;
 
 public class WarWithHash
 {
-	String[] s;
+	Hashtable<Integer, String> s;
 	int k;
-	Hashtable<Integer, String> table;
 	
 	public WarWithHash(String[] s, int k)
 	{
-		this.s = s;
+		this.s = new Hashtable<Integer, String>();
 		this.k = k;
-		this.table = new Hashtable<Integer, String>();
 		
-		for (String t: s) {
-			table.put(hash(t), t);
+		for (String i : s) 
+		{
+			this.s.put(i.hashCode(), i);
 		}
 	}
 	
+	/**
+	 * Iterates through the given string, checking if each k-length substring is in s.
+	 * @param a The string to check
+	 * @return True if all k-length substrings are in s, false otherwise.
+	 */
 	public ArrayList<String> compute2k()
 	{
 		ArrayList<String> t = new ArrayList<String>();
 		
-		for(String e : s)
+		Set<Integer> keys = s.keySet();
+		for(Integer e : keys)
 		{
-			for(String f : s)
+			for(Integer f : keys)
 			{
-				if(isValid(e + f))
+				if(isValid(s.get(e) + s.get(f)))
 				{
-					t.add(e + f);
+					t.add(s.get(e) + s.get(f));
 				}
 			}
 		}
 		return t;
 	}
 	
-	private boolean isValid(String s) {
-		return table.get(hash(s)) != null;
-	}
-	
-	private int hash(String t) {
-		return s.hashCode()%(s.length/2);
+	/**
+	 * Iterates through the given string, checking if each k-length substring is in s.
+	 * @param a The string to check
+	 * @return True if all k-length substrings are in s, false otherwise.
+	 */
+	private boolean isValid(String a) 
+	{
+		for(int i = 0; i <= k; i++)
+		{
+			if(s.get(a.substring(i, i+k).hashCode()) == null)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 }
 

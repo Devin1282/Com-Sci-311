@@ -8,20 +8,29 @@
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 
 public class WarWithRollHash
 {
-	// member fields and methods
+	Hashtable s;
+	int k;
 	
 	public WarWithRollHash(String[] s, int k)
 	{
-		// implementation
+		this.s = new Hashtable<Integer, String>();
+		this.k = k;
+		
+		for (String i : s) 
+		{
+			this.s.put(i.hashCode(), i);
+		}
 	}
 	
 	public ArrayList<String> compute2k()
 	{
-		// implementation
+		ArrayList<String> t = new ArrayList<String>();
+		return t;
 	}
 }
 
