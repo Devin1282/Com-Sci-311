@@ -59,12 +59,11 @@ public class WarWithRollHash
 	private boolean isValid(String a) 
 	{
 		int hash = a.substring(0, k).hashCode();
-		for(int i = 0; i <= k; i++)
+		for(int i = 0; i < k; i++)
 		{
-
-			String toRem = "" + a.charAt(i);
-			String toAdd = "" + a.charAt(i + k);
-			hash = hash - toRem.hashCode() + toAdd.hashCode();
+			Character toRem = a.charAt(i);
+			Character toAdd = a.charAt(i + k);
+			hash = (int) ((hash - (toRem.hashCode() * Math.pow(31, k - 1))) * 31) + toAdd.hashCode();
 			if(s.get(hash) == null)
 			{
 				return false;

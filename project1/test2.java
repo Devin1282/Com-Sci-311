@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class test2 {
 
-	static String u = "ATTGACCATT";
+	static String u = "ATGACCATT";
 	static int k = 3;
 	static String[] s;
 	
@@ -17,10 +18,15 @@ public class test2 {
 		WarWithHash c = new WarWithHash(s, k);
 		WarWithRollHash d = new WarWithRollHash(s, k);
 		
-		printArray(toArray(a.compute2k()), "a: ");
-		printArray(toArray(b.compute2k()), "b: ");
-		printArray(toArray(c.compute2k()), "c: ");
-		printArray(toArray(d.compute2k()), "d: ");
+		String[] ra = toArray(a.compute2k()); Arrays.sort(ra);
+		String[] rb = toArray(b.compute2k()); Arrays.sort(rb);
+		String[] rc = toArray(c.compute2k()); Arrays.sort(rc);
+		String[] rd = toArray(d.compute2k()); Arrays.sort(rd);
+		
+		printArray(ra, "a: ");
+		printArray(rb, "b: ");
+		printArray(rc, "c: ");
+		printArray(rd, "d: ");
 	}
 	
 	private static ArrayList<String> subsets(String s, int k)
