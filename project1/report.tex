@@ -53,40 +53,68 @@
 
 \textbf{PseudoCode:}\\
 \begin{verbatim}
-Input: int k, Array, a[], of strings of length k.\\
+Input: int k, Array a[]\\
 For each string e in a[]:
     For each string f in a[]:
         check if the string "e+f" is valid(e+f)
     	
     	
 function valid(s):
-   For each b = k length substring in s:
+   For each b = (k length substring in s):
        Loop through our original array a:
-           check if b is in a at any index
+           check if b is in a
 \end{verbatim}
 
 \textbf{Runtime of compute2k():}\\
 
-The algorithm is split into 3 different parts.  
+The algorithm essentially 4 nested loops, they run n-times, n-times, k-times, and n-times.\\
+So the run-time is $O(kn^3)$
 
-\pagebreak
+
 %----------------------------------
 \question{WarWithBST}{}
 
 \textbf{PseudoCode:}\\
 
+\begin{verbatim}
+Input: int k, Array a[]\\
+For each string e in a[]:
+    For each string f in a[]:
+        check if the string "e+f" is valid(e+f)
+    	
+    	
+function valid(s):
+   For each b = (k length substring in s):
+       search the BST for the substring b
+\end{verbatim}
+
+
 \textbf{Runtime of compute2k():}\\
+The algorithm essentially 4 nested loops, they run n-times, n-times, k-times, and log n-times.\\
+So the run-time is $O(kn^2logn)$
 
 \pagebreak
 %----------------------------------
 \question{WarWithHash}{}
 
 \textbf{PseudoCode:}\\
+\begin{verbatim}
+Input: int k, Array a[]\\
+For each string e in a[]:
+    For each string f in a[]:
+        check if the string "e+f" is valid(e+f)
+    	
+    	
+function valid(s):
+   For each b = (k length substring in s):
+       hash b and look it up in the HashSet
+\end{verbatim}
 
 \textbf{Runtime of compute2k():}\\
+The algorithm essentially 4 nested loops, they run n-times for the most outer loop, n-times for the second most outer loop, k-times for each substring of the 2k string, and k-times for the hash of the k-length string.\\
+So the run-time is $O(k^2n^2)$
 
 
-\pagebreak
 %----------------------------------
 \question{WarWithRollHash}{}
 
