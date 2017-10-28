@@ -7,10 +7,20 @@
 // DO NOT INCLUDE LIBRARIES OUTSIDE OF THE JAVA STANDARD LIBRARY
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
+/**
+ * 
+ * @author mewray, devinj (Mason Wray, Devin Johnson)
+ *
+ */
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
 
+/**
+ * 
+ * @author mewray, devinj (Mason Wray, Devin Johnson)
+ *
+ */
 public class WarWithHash
 {
 	Hashtable<Integer, String> s;

@@ -10,12 +10,21 @@
 import java.util.ArrayList;
 
 
-
+/**
+ * 
+ * @author mewray, devinj (Mason Wray, Devin Johnson)
+ *
+ */
 public class WarWithArray
 {
 	String[] s;
 	int k;
 	
+	/**
+	 * 
+	 * @author mewray, devinj (Mason Wray, Devin Johnson)
+	 *
+	 */
 	public WarWithArray(String[] s, int k)
 	{
 		this.s = s;

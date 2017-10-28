@@ -9,7 +9,11 @@
 
 import java.util.ArrayList;
 
-
+/**
+ * 
+ * @author mewray, devinj (Mason Wray, Devin Johnson)
+ *
+ */
 public class WarWithBST extends BinaryST
 {
 	String[] s;

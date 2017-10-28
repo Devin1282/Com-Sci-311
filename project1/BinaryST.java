@@ -7,6 +7,11 @@ import java.util.ArrayList;
 *Runtime of all you methods must be O(h) (except inOrder and preOrder), where h is the height of the tree.
 **/
 
+/**
+ * 
+ * @author mewray, devinj (Mason Wray, Devin Johnson)
+ *
+ */
 public class BinaryST {
 	Node root;
 	int size;

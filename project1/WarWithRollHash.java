@@ -12,6 +12,11 @@ import java.util.Hashtable;
 import java.util.Set;
 
 
+/**
+ * 
+ * @author mewray, devinj (Mason Wray, Devin Johnson)
+ *
+ */
 public class WarWithRollHash
 {
 	Hashtable<Integer, String> s;
