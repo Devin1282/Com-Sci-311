@@ -121,14 +121,18 @@ So the run-time is $O(k^2n^2)$
 \question{WarWithRollHash}{}
 
 \textbf{PseudoCode:}\\
+
+\begin{verbatim}
 Input: int k, Array a[]\\
-	For each string e in a[]:
-		For each string f in a[]:
-			check if the string "e+f" is valid(e+f)
+    For each string e in a[]:
+        For each string f in a[]:
+            check if the string "e+f" is valid(e+f)
 			
 function valid(s):
-	For each b = (k length substring in s):
-		hash b and look it up in the HashSet
+    For each b = (k length substring in s):
+        hash b and look it up in the HashSet
+\end{verbatim}
+
 
 \textbf{Runtime of compute2k():}\\
 The algorithm is very similar to the compute2K() method in WarWithHash, except that each hash (after the first hash) is computed in O(1) time, rather than O(k) time. The rolling hash uses the last hash value to compute the new hash with one addition, one subtraction, and one multiplication, regardless of the values of n or k.\\
