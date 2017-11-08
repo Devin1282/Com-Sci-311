@@ -17,23 +17,21 @@ import java.util.ArrayList;
 public class WikiCrawler
 {
 	static final String BASE_URL = "https://en.wikipedia.org";
-	// other member fields and methods
 	
-
 	public WikiCrawler(String seedUrl, int max, ArrayList<String> topics, String fileName)
 	{
-		try {
-			URL url = new URL(BASE_URL+seedUrl);
+		try 
+		{
+			URL url = new URL(BASE_URL + seedUrl);
 			InputStream is = url.openStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			System.out.println(e.getMessage());
 		}
-		
 	}
 
-	// NOTE: extractLinks takes the source HTML code, NOT a URL
 	public ArrayList<String> extractLinks(String doc)
 	{
 		// implementation
