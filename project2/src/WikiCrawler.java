@@ -7,6 +7,10 @@
 // DO NOT INCLUDE LIBRARIES OUTSIDE OF THE JAVA STANDARD LIBRARY
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -14,10 +18,19 @@ public class WikiCrawler
 {
 	static final String BASE_URL = "https://en.wikipedia.org";
 	// other member fields and methods
+	
 
 	public WikiCrawler(String seedUrl, int max, ArrayList<String> topics, String fileName)
 	{
-		// implementation
+		try {
+			URL url = new URL(BASE_URL+seedUrl);
+			InputStream is = url.openStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 	// NOTE: extractLinks takes the source HTML code, NOT a URL
