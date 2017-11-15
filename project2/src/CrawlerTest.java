@@ -20,7 +20,9 @@ public class CrawlerTest
 		WikiCrawler c = new WikiCrawler(s, m, t, o);
 		
 		//Run Tests
-		printList(c.extractLinks(loadFile("./src/sample.txt")));
+		//printList(c.extractLinks(loadFile("./src/sample.txt")));
+		
+		c.crawl();
 		
 	}
 	

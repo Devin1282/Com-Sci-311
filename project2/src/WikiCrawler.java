@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,21 +21,18 @@ import java.util.regex.Pattern;
 public class WikiCrawler
 {
 	static final String BASE_URL = "https://en.wikipedia.org";
-	private URL seed;
+	private String seed;
 	private int max;
+	private ArrayList<String> topics;
+	private String filename;
 	
 	public WikiCrawler(String seedUrl, int max, ArrayList<String> topics, String fileName)
 	{
-		try
-		{
-			
-		}
-		catch (Exception e)
-		{
-			e.getMessage();
-		}
-		this.max = max;
-		this.seed = new URL(BASE_URL + seedUrl);
+
+			this.max = max;
+			this.seed = seedUrl;
+			this.topics = topics;
+			this.filename = filename;
 	}
 
 	public ArrayList<String> extractLinks(String doc)
@@ -59,7 +58,14 @@ public class WikiCrawler
 
 	public void crawl()
 	{
-		// implementation
+		Queue q = new LinkedList<String>();;
+		ArrayList<String> v = new ArrayList<String>();
+		
+		
+		while(q.size() > 0 && v.size() < this.max)
+		{
+			if(v.size() % 50 == 0) { pause(4000); }
+		}
 	}
 	
 	private boolean containsTopics(String doc, ArrayList<String> topics)
@@ -70,5 +76,20 @@ public class WikiCrawler
 	private String fetchPage(String link)
 	{
 		return null;
+	}
+	
+	/*
+	 * Suspends the thread for the given number of milliseconds.
+	 */
+	private void pause(int millis)
+	{
+		try 
+		{
+			Thread.sleep(millis);
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 }
