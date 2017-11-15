@@ -45,14 +45,14 @@ public class WikiCrawler
 			doc = doc.split("<[pP]>")[1];
 		}
 		
-		Pattern p = Pattern.compile("/wiki/.+");
+		Pattern p = Pattern.compile("\"/wiki/.+?\"");
 		Matcher m = p.matcher(doc);
 		while(m.find())
 		{
-			String link = doc.substring(m.start(), m.end()).split("\"")[0];
+			String link = doc.substring(m.start() + 1, m.end() - 1);
 			if(!link.contains(":") && !link.contains("#"))
 			{
-				links.add(doc.substring(m.start(), m.end()).split("\"")[0]);
+				links.add(link);
 			}
 		}
 		return links;
