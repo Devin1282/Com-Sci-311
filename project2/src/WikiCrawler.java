@@ -63,10 +63,11 @@ public class WikiCrawler
 		Queue<String> q = new LinkedList<String>();;
 		ArrayList<String> v = new ArrayList<String>();
 		ArrayList<String> g = new ArrayList<String>();
+		int pages = 0;
 		
 		q.add(seed);
 		
-		while(q.size() > 0 && v.size() < this.max)
+		while(q.size() > 0 && pages < this.max)
 		{
 			if(v.size() % 50 == 0) { pause(4000); }		
 			String current_link = q.poll();
@@ -74,6 +75,17 @@ public class WikiCrawler
 			ArrayList<String> current_links = extractLinks(current_content);
 			v.add(current_link);
 			
+			if(containsTopics(current_content, topics))
+			{
+				//Increment number of vertices in graph
+				pages = pages + 1;
+				
+				//Add edges to graph, and links to queue
+				for(int i = 0; i < current_links.size(); i++)
+				{
+					
+				}				
+			}
 		}
 	}
 	
