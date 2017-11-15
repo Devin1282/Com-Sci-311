@@ -17,14 +17,17 @@ import java.util.ArrayList;
 public class WikiCrawler
 {
 	static final String BASE_URL = "https://en.wikipedia.org";
+	private BufferedReader br;
+	private int max;
 	
 	public WikiCrawler(String seedUrl, int max, ArrayList<String> topics, String fileName)
 	{
 		try 
 		{
+			this.max = max;
 			URL url = new URL(BASE_URL + seedUrl);
 			InputStream is = url.openStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			br = new BufferedReader(new InputStreamReader(is));
 		} 
 		catch (Exception e) 
 		{
@@ -34,8 +37,8 @@ public class WikiCrawler
 
 	public ArrayList<String> extractLinks(String doc)
 	{
-		// implementation
-		return null;
+		ArrayList<String> links = new ArrayList<String>();
+		return links;
 	}
 
 	public void crawl()
