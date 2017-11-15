@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class WikiCrawler
@@ -38,6 +40,21 @@ public class WikiCrawler
 	public ArrayList<String> extractLinks(String doc)
 	{
 		ArrayList<String> links = new ArrayList<String>();
+		if(doc.split("<[pP]>").length > 1)
+		{
+			doc = doc.split("<[pP]>")[1];
+		}
+		
+		Pattern p = Pattern.compile("/wiki/.+");
+		Matcher m = p.matcher(doc);
+		while(m.find())
+		{
+			String link = doc.substring(m.start(), m.end()).split("\"")[0];
+			if(!link.contains(":") && !link.contains("#"))
+			{
+				links.add(doc.substring(m.start(), m.end()).split("\"")[0]);
+			}
+		}
 		return links;
 	}
 

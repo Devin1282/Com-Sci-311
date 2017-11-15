@@ -20,7 +20,7 @@ public class CrawlerTest
 		WikiCrawler c = new WikiCrawler(s, m, t, o);
 		
 		//Run Tests
-		System.out.println(loadFile("./src/test.txt"));
+		printList(c.extractLinks(loadFile("./src/sample.txt")));
 		
 	}
 	
@@ -45,5 +45,16 @@ public class CrawlerTest
 			e.printStackTrace();
 		}
 		return file;
+	}
+	
+	/*
+	 * Prints the given ArrayList of Strings.
+	 */
+	public static void printList(ArrayList<String> list)
+	{
+		for (int i = 0; i < list.size(); i++)
+		{
+			System.out.println(list.get(i));
+		}
 	}
 }
