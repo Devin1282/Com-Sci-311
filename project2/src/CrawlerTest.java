@@ -12,7 +12,7 @@ public class CrawlerTest
 	{
 		//Define Crawler parameters
 		String s = "/wiki/Iowa_State_University";
-		int m = 100;
+		int m = 10;
 		ArrayList<String> t = new ArrayList<String>();
 		String o = "output.txt";
 		
@@ -20,7 +20,7 @@ public class CrawlerTest
 		WikiCrawler c = new WikiCrawler(s, m, t, o);
 		
 		//Run Tests
-		//printList(c.extractLinks(loadFile("./src/sample.txt")));
+		c.writeList("./src/output.txt", c.extractLinks(loadFile("./src/sample.txt")));
 		
 	}
 	
