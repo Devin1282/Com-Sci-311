@@ -28,11 +28,10 @@ public class WikiCrawler
 	
 	public WikiCrawler(String seedUrl, int max, ArrayList<String> topics, String fileName)
 	{
-
 			this.max = max;
 			this.seed = seedUrl;
 			this.topics = topics;
-			this.filename = filename;
+			this.filename = fileName;
 	}
 
 	public ArrayList<String> extractLinks(String doc)
@@ -58,13 +57,17 @@ public class WikiCrawler
 
 	public void crawl()
 	{
-		Queue q = new LinkedList<String>();;
+		Queue<String> q = new LinkedList<String>();;
 		ArrayList<String> v = new ArrayList<String>();
 		
+		q.add(seed);
+		v.add(seed);
+		
+		extractLinks(fetchPage(BASE_URL + seed));
 		
 		while(q.size() > 0 && v.size() < this.max)
 		{
-			if(v.size() % 50 == 0) { pause(4000); }
+			if(v.size() % 50 == 0) { pause(4000); }			
 		}
 	}
 	
@@ -75,7 +78,25 @@ public class WikiCrawler
 	
 	private String fetchPage(String link)
 	{
-		return null;
+		
+		try
+		{
+			URL url = new URL(link);
+			InputStream is = url.openStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			String page = "";
+			String line = null;
+			while ((line = br.readLine()) != null)
+			{
+				page = page + line + System.lineSeparator();
+			}
+			return page;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/*

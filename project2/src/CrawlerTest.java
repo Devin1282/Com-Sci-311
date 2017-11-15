@@ -22,8 +22,6 @@ public class CrawlerTest
 		//Run Tests
 		//printList(c.extractLinks(loadFile("./src/sample.txt")));
 		
-		c.crawl();
-		
 	}
 	
 	/*
