@@ -1,5 +1,5 @@
 
-public class Test {
+public class GraphTest {
 
 	public static void main(String[] args) {
 		String filePath = "C:\\Users\\Devin\\Documents\\ComSci311\\Com-Sci-311\\project2\\src\\wikiCC.txt";
