@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class GraphTest {
 
@@ -18,4 +19,25 @@ public class GraphTest {
 		System.out.println("Diameter of Graph: "+r);
 	}
 
+	
+	public static void reportTest() {
+		//Define Crawler parameters
+		String s = "/wiki/Computer_Science";
+		int m = 200;
+		ArrayList<String> t = new ArrayList<String>();
+		String o = ".\\src\\WikiCS.txt";
+		
+		//Construct Crawler
+		WikiCrawler c = new WikiCrawler(s, m, t, o);
+		
+		GraphProcessor g = new GraphProcessor(o);
+		String largestOutDegree = g.largestOutDegree();
+		System.out.println("Largest OutDegree = "+largestOutDegree);
+		
+		String largestCentrality = g.largestCentrality();
+		System.out.println("Largest Centrality = "+largestCentrality);
+		
+		System.out.println("Diameter = "+g.diameter());
+		
+	}
 }
