@@ -75,6 +75,9 @@ public class GraphProcessor
 	public int outDegree(String v)
 	{
 		int s = vertexLookup.indexOf(v);
+		if (s == -1) {
+			return -1;
+		}
 		return adj[s].size();
 	}
 
@@ -120,15 +123,34 @@ public class GraphProcessor
 
 	public int diameter()
 	{
-		
 		// implementation
-		return 0;
+		int d = 0;
+		for (String s : vertexLookup) {
+			for (String t : vertexLookup) {
+				ArrayList<String> path = bfsPath(s, t);
+					if (path.size() > d) {
+						d = path.size();
+				}
+			}
+		}
+		return d;
 	}
 
+	
 	public int centrality(String v)
 	{
 		// implementation
-		return 0;
+		int total = 0;
+		for (String s : vertexLookup) {
+			for (String t : vertexLookup) {
+				ArrayList<String> path = bfsPath(s, t);
+				if (path.indexOf(v) != -1) {
+					total++;
+				}
+			}
+		}
+		
+		return total;
 	}
 
 }
