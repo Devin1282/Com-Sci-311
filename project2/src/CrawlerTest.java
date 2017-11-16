@@ -11,14 +11,14 @@ public class CrawlerTest
 	public static void main(String[] args) 
 	{
 		//Define Crawler parameters
-		String s = "/wiki/Iowa_State_University";
-		int m = 20;
+		String s = "/wiki/Computer_Science";
+		int m = 200;
 		ArrayList<String> t = new ArrayList<String>();
 		String o = "output.txt";
 		
 		//Construct Crawler
-		t.add("Iowa State");
-		t.add("Cyclones");
+//		t.add("Iowa State");
+//		t.add("Cyclones");
 		WikiCrawler c = new WikiCrawler(s, m, t, o);
 		
 		//Run Tests

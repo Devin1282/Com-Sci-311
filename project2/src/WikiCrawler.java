@@ -92,7 +92,7 @@ public class WikiCrawler
 					if(containsTopics(fetchPage(BASE_URL + link), topics) && !link.equals(current) && !p.contains(link))	//If each link is valid
 					{
 						p.add(link);
-						System.out.println(p.size() + "");
+						System.out.println("Located " + p.size() + " valid links.");
 					}
 				}
 			}			
@@ -107,7 +107,10 @@ public class WikiCrawler
 			{
 				if(p.contains(links.get(j)))
 				{
-					e.add(link + " " + links.get(j));
+					if(!e.contains(link + " " + links.get(j)))
+					{
+						e.add(link + " " + links.get(j));
+					}
 				}
 			}
 		}
@@ -172,12 +175,12 @@ public class WikiCrawler
 		
 		if(cache.containsKey(link))
 		{
-			System.out.println("L - Fetching " + link);
+			System.out.println("Fetching (cache) " + link);
 			return cache.get(link);
 		}
 		else
 		{
-			System.out.println("R - Fetching " + link);
+			System.out.println("Fetching (web) " + link);
 			requests = requests + 1;
 			if(requests % 50 == 0) { System.out.println("Pausing after " + requests + " requests."); pause(4000); }
 			
