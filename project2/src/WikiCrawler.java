@@ -69,52 +69,52 @@ public class WikiCrawler
 	{
 		Queue<String> q = new LinkedList<String>();;
 		ArrayList<String> v = new ArrayList<String>();
-		ArrayList<String> e = new ArrayList<String>();
 		ArrayList<String> p = new ArrayList<String>();
-//		int pages = 0;
+		ArrayList<String> e = new ArrayList<String>();
 		
 		if(containsTopics(fetchPage(BASE_URL + seed), topics))
 		{
 			q.add(seed);
 			p.add(seed);
-//			pages = pages + 1;
 		}
 		
-		while(q.size() > 0)
+		//Get list of valid pages
+		while(q.size() > 0 && p.size() < max)
 		{	
-			String current = q.poll();												//Get the current page from the queue
-			v.add(current);															//Mark the current page visited
-			ArrayList<String> links = extractLinks(fetchPage(BASE_URL + current));	//Get the links  on the current page
-			for(int i = 0; i < links.size(); i++)									//Iterate through each link on the current page
+			String current = q.poll();
+			v.add(current);
+			ArrayList<String> links = extractLinks(fetchPage(BASE_URL + current));
+			for(int i = 0; i < links.size(); i++)
 			{
-				String link = links.get(i);										
-				if(containsTopics(fetchPage(BASE_URL + link), topics) && !link.equals(current))	//If each link is valid
+				if(p.size() < max)
 				{
-					if(p.size() < max)
+					String link = links.get(i);										
+					if(containsTopics(fetchPage(BASE_URL + link), topics) && !link.equals(current) && !p.contains(link))	//If each link is valid
 					{
-						System.out.println("Found " + p.size());
-						e.add(current + " " + link);
-						if(!v.contains(link))
-						{
-							q.add(link);
-						}
-						if(!p.contains(link))
-						{
-							p.add(link);
-						}
-					}
-					else
-					{
-						System.out.println(links.size() - i + " Links, " + q.size() + " in queue.");
-						if(p.contains(link))
-						{
-							e.add(current + " " + link);
-						}
+						p.add(link);
+						System.out.println(p.size() + "");
 					}
 				}
 			}			
 		}
+		
+		//Build graph over valid pages
+		for(int i = 0; i < p.size(); i++)
+		{
+			String link = p.get(i);
+			ArrayList<String> links = extractLinks(fetchPage(BASE_URL + link));
+			for(int j = 0; j < links.size(); j++)
+			{
+				if(p.contains(links.get(j)))
+				{
+					e.add(link + " " + links.get(j));
+				}
+			}
+		}
+		
+		
 		writeList("./src/output.txt", e, p.size());
+		System.out.println("Done.");
 	}
 	
 	/*
@@ -168,14 +168,16 @@ public class WikiCrawler
 	 */
 	private String fetchPage(String link)
 	{
-		System.out.println("Fetching " + link);
+		
 		
 		if(cache.containsKey(link))
 		{
+			System.out.println("L - Fetching " + link);
 			return cache.get(link);
 		}
 		else
 		{
+			System.out.println("R - Fetching " + link);
 			requests = requests + 1;
 			if(requests % 50 == 0) { System.out.println("Pausing after " + requests + " requests."); pause(4000); }
 			
