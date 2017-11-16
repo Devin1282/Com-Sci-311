@@ -116,7 +116,7 @@ public class WikiCrawler
 		}
 		
 		
-		writeList("./src/output.txt", e, p.size());
+		writeList(filename, e, p.size());
 		System.out.println("Done.");
 	}
 	
