@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.regex.Matcher;
@@ -29,6 +30,8 @@ public class WikiCrawler
 	private ArrayList<String> topics;
 	private String filename;
 	
+	private HashMap<String, String> cache;
+	
 	static int requests = 0;
 	
 	public WikiCrawler(String seedUrl, int max, ArrayList<String> topics, String fileName)
@@ -37,14 +40,16 @@ public class WikiCrawler
 			this.seed = seedUrl;
 			this.topics = topics;
 			this.filename = fileName;
+			this.cache = new HashMap<String, String>();
 	}
 
 	public ArrayList<String> extractLinks(String doc)
 	{
 		ArrayList<String> links = new ArrayList<String>();
-		if(doc.split("<[pP]>").length > 1)
+		String[] paragraphs = doc.split("<[pP]>");
+		if(paragraphs.length > 1)
 		{
-			doc = doc.split("<[pP]>")[1];
+			doc = doc.substring(paragraphs[0].length(), doc.length() - 1);
 		}
 		
 		Pattern p = Pattern.compile("\"/wiki/.+?\"");
@@ -65,43 +70,64 @@ public class WikiCrawler
 		Queue<String> q = new LinkedList<String>();;
 		ArrayList<String> v = new ArrayList<String>();
 		ArrayList<String> e = new ArrayList<String>();
-		int pages = 0;
+		ArrayList<String> p = new ArrayList<String>();
+//		int pages = 0;
 		
 		if(containsTopics(fetchPage(BASE_URL + seed), topics))
 		{
 			q.add(seed);
-			pages = pages + 1;
+			p.add(seed);
+//			pages = pages + 1;
 		}
 		
-		while(q.size() > 0 && pages < this.max)
+		while(q.size() > 0)
 		{	
-			String current = q.poll();
-			v.add(current);
-			ArrayList<String> links = extractLinks(fetchPage(BASE_URL + current));
-			for(int i = 0; i < links.size(); i++)
+			String current = q.poll();												//Get the current page from the queue
+			v.add(current);															//Mark the current page visited
+			ArrayList<String> links = extractLinks(fetchPage(BASE_URL + current));	//Get the links  on the current page
+			for(int i = 0; i < links.size(); i++)									//Iterate through each link on the current page
 			{
-				String link = links.get(i);
-				if(containsTopics(fetchPage(BASE_URL + link), topics) && !link.equals(current))
+				String link = links.get(i);										
+				if(containsTopics(fetchPage(BASE_URL + link), topics) && !link.equals(current))	//If each link is valid
 				{
-					e.add(current + " " + link);
-					if(!v.contains(link))
+					if(p.size() < max)
 					{
-						q.add(link);
+						System.out.println("Found " + p.size());
+						e.add(current + " " + link);
+						if(!v.contains(link))
+						{
+							q.add(link);
+						}
+						if(!p.contains(link))
+						{
+							p.add(link);
+						}
+					}
+					else
+					{
+						System.out.println(links.size() - i + " Links, " + q.size() + " in queue.");
+						if(p.contains(link))
+						{
+							e.add(current + " " + link);
+						}
 					}
 				}
-			}
+			}			
 		}
+		writeList("./src/output.txt", e, p.size());
 	}
 	
 	/*
 	 * Takes a filename and Arraylist of lines of text as input and attempts to write the list to the file.
 	 */
-	public void writeList(String filename, ArrayList<String> contents)
+	public void writeList(String filename, ArrayList<String> contents, int vertices)
 	{
 		try
 		{
 			File f = new File(filename);
 			BufferedWriter b = new BufferedWriter(new FileWriter(f));
+			b.write(vertices + "");
+			b.newLine();
 			for(int i = 0; i < contents.size(); i++)
 			{
 				b.write(contents.get(i));
@@ -121,9 +147,10 @@ public class WikiCrawler
 	 */
 	private boolean containsTopics(String doc, ArrayList<String> topics)
 	{
-		if(doc.split("<[pP]>").length > 1)
+		String[] paragraphs = doc.split("<[pP]>");
+		if(paragraphs.length > 1)
 		{
-			doc = doc.split("<[pP]>")[1];
+			doc = doc.substring(paragraphs[0].length(), doc.length() - 1);
 		}
 		
 		for(int i = 0; i < topics.size(); i++)
@@ -141,27 +168,39 @@ public class WikiCrawler
 	 */
 	private String fetchPage(String link)
 	{
-		requests = requests + 1;
-		if(requests % 50 == 0) { pause(4000); }	
-		try
+		System.out.println("Fetching " + link);
+		
+		if(cache.containsKey(link))
 		{
-			URL url = new URL(link);
-			InputStream is = url.openStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			String page = "";
-			String line = null;
-			while ((line = br.readLine()) != null)
-			{
-				page = page + line + System.lineSeparator();
-			}
-			return page;
+			return cache.get(link);
 		}
-		catch (Exception e)
+		else
 		{
-			e.printStackTrace();
-			return null;
+			requests = requests + 1;
+			if(requests % 50 == 0) { System.out.println("Pausing after " + requests + " requests."); pause(4000); }
+			
+			try
+			{
+				URL url = new URL(link);
+				InputStream is = url.openStream();
+				BufferedReader br = new BufferedReader(new InputStreamReader(is));
+				String page = "";
+				String line = null;
+				while ((line = br.readLine()) != null)
+				{
+					page = page + line + System.lineSeparator();
+				}
+				cache.put(link, page);
+				return page;
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+				return null;
+			}
 		}
 	}
+	
 	
 	/*
 	 * Suspends the thread for the given number of milliseconds.
