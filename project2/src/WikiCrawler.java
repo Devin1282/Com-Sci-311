@@ -117,7 +117,19 @@ public class WikiCrawler
 	 */
 	private boolean containsTopics(String doc, ArrayList<String> topics)
 	{
-		return false;
+		if(doc.split("<[pP]>").length > 1)
+		{
+			doc = doc.split("<[pP]>")[1];
+		}
+		
+		for(int i = 0; i < topics.size(); i++)
+		{
+			if(!doc.contains(topics.get(i)))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/*
