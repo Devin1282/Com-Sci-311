@@ -17,10 +17,11 @@ public class CrawlerTest
 		String o = "output.txt";
 		
 		//Construct Crawler
+		
 		WikiCrawler c = new WikiCrawler(s, m, t, o);
 		
 		//Run Tests
-		c.writeList("./src/output.txt", c.extractLinks(loadFile("./src/sample.txt")));
+		
 		
 	}
 	

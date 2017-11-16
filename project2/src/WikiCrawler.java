@@ -29,6 +29,8 @@ public class WikiCrawler
 	private ArrayList<String> topics;
 	private String filename;
 	
+	static int requests = 0;
+	
 	public WikiCrawler(String seedUrl, int max, ArrayList<String> topics, String fileName)
 	{
 			this.max = max;
@@ -62,29 +64,31 @@ public class WikiCrawler
 	{
 		Queue<String> q = new LinkedList<String>();;
 		ArrayList<String> v = new ArrayList<String>();
-		ArrayList<String> g = new ArrayList<String>();
+		ArrayList<String> e = new ArrayList<String>();
 		int pages = 0;
 		
-		q.add(seed);
+		if(containsTopics(fetchPage(BASE_URL + seed), topics))
+		{
+			q.add(seed);
+			pages = pages + 1;
+		}
 		
 		while(q.size() > 0 && pages < this.max)
-		{
-			if(v.size() % 50 == 0) { pause(4000); }		
-			String current_link = q.poll();
-			String current_content = fetchPage(BASE_URL + current_link);
-			ArrayList<String> current_links = extractLinks(current_content);
-			v.add(current_link);
-			
-			if(containsTopics(current_content, topics))
+		{	
+			String current = q.poll();
+			v.add(current);
+			ArrayList<String> links = extractLinks(fetchPage(BASE_URL + current));
+			for(int i = 0; i < links.size(); i++)
 			{
-				//Increment number of vertices in graph
-				pages = pages + 1;
-				
-				//Add edges to graph, and links to queue
-				for(int i = 0; i < current_links.size(); i++)
+				String link = links.get(i);
+				if(containsTopics(fetchPage(BASE_URL + link), topics) && !link.equals(current))
 				{
-					
-				}				
+					e.add(current + " " + link);
+					if(!v.contains(link))
+					{
+						q.add(link);
+					}
+				}
 			}
 		}
 	}
@@ -137,7 +141,8 @@ public class WikiCrawler
 	 */
 	private String fetchPage(String link)
 	{
-		
+		requests = requests + 1;
+		if(requests % 50 == 0) { pause(4000); }	
 		try
 		{
 			URL url = new URL(link);
