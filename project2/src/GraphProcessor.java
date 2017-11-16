@@ -44,6 +44,7 @@ public class GraphProcessor
 				
 			}
 			input.close();
+			System.out.println(vertexLookup.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -70,6 +71,32 @@ public class GraphProcessor
 			vertexLookup.add(dest);
 		}
 		adj[vertexLookup.indexOf(src)].add(vertexLookup.indexOf(dest));
+	}
+	
+	public String largestOutDegree() {
+		String s = "";
+		int degree = 0;
+		for (String t : vertexLookup) {
+			int i = outDegree(t);
+			if (i > degree) {
+				degree = 1;
+				s = t;
+			}
+		}
+		return s;
+	}
+	
+	public String largestCentrality() {
+		String s = "";
+		int c = 0;
+		for (String t : vertexLookup) {
+			int i = centrality(t);
+			if (i > c) {
+				c = 1;
+				s = t;
+			}
+		}
+		return s;
 	}
 
 	public int outDegree(String v)
