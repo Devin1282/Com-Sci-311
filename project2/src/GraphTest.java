@@ -31,11 +31,11 @@ public class GraphTest {
 		WikiCrawler c = new WikiCrawler(s, m, t, o);
 		
 		GraphProcessor g = new GraphProcessor(o);
-		String largestOutDegree = g.largestOutDegree();
-		System.out.println("Largest OutDegree = "+largestOutDegree);
+//		String largestOutDegree = g.largestOutDegree();
+//		System.out.println("Largest OutDegree = "+largestOutDegree);
 		
-		String largestCentrality = g.largestCentrality();
-		System.out.println("Largest Centrality = "+largestCentrality);
+//		String largestCentrality = g.largestCentrality();
+//		System.out.println("Largest Centrality = "+largestCentrality);
 		
 		System.out.println("Diameter = "+g.diameter());
 		
