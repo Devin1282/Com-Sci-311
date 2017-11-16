@@ -52,6 +52,7 @@
 \question{Data Structures used for $Q$ and $visited$}{}
 
 \question{Number of edges and vertices}{}
+There are 200 edges.
 
 \question{Vertex with largest out degree}{}
 
@@ -60,11 +61,21 @@
 \question{Vertex/page with highest centrality}{}
 
 \question{Run-time analysis of GraphProcessor}{}
+$V$ is the number of vertices, and $E$ is the number of edges in graph $G$.\\ 
+\vspace{3mm}
+\textit{outDegree(String v})\\
+Runs in $O(1)$ time because you just return the size of the Linkedlist of edges for the vertex v.
 
+\vspace{3mm}
+\textit{bfsPath(String u, String v)}\\
+Runs in $O(V+E)$ time because you look at each vertex and each edge once.
 
-\part{outDegree(String v)}
+\vspace{3mm}
+\textit{diameter()}\\
+Runs in $O((V^2)V+E)$ time because you do BFS for each pair of vertices.
 
-\part{bfsPath(String u, String v)}
-
+\vspace{3mm}
+\textit{centrality(String v)}\\
+Runs in $O((V^2)V+E)$ time because you do BFS for each pair of vertices.
 
 \end{document}

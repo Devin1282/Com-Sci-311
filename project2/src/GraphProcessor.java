@@ -44,6 +44,7 @@ public class GraphProcessor
 				
 			}
 			input.close();
+			System.out.println(vertexLookup.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
