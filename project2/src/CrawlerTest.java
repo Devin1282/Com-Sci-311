@@ -12,7 +12,7 @@ public class CrawlerTest
 	{
 		//Define Crawler parameters
 		String s = "/wiki/Iowa_State_University";
-		int m = 1;
+		int m = 20;
 		ArrayList<String> t = new ArrayList<String>();
 		String o = "output.txt";
 		
